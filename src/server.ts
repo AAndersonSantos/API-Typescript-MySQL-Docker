@@ -16,10 +16,6 @@ AppDataSource.initialize()
 
     app.use('/api', userRoutes);
 
-    app.get('/', (req, res) => {
-      res.send('Hello World');
-    });
-
     app.listen(port, () => {
       // eslint-disable-next-line no-console
       console.log(`Server is running at http://localhost:${port}`);
