@@ -11,7 +11,7 @@ export class UserController {
   async getAllUsers(res: Response): Promise<Response> {
     try {
       const users = await this.userService.getAllUsers();
-      return res.status(201).json(users);
+      return res.status(200).json(users);
     } catch (error) {
       return res.status(500).json({ message: 'Erro ao listar usuários!', error });
     }

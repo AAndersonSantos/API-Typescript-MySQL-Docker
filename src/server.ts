@@ -7,19 +7,21 @@ import { AppDataSource } from './data-source';
 
 dotenv.config();
 
+const app = express();
+const port = process.env.PORT || '8080';
+
+app.use(bodyParser.json());
+
+app.use('/api', userRoutes);
+
 AppDataSource.initialize()
   .then(() => {
-    const app = express();
-    const port = process.env.PORT || '8080';
-
-    app.use(bodyParser.json());
-
-    app.use('/api', userRoutes);
-
-    app.listen(port, () => {
+    app.listen(port, async () => {
       // eslint-disable-next-line no-console
       console.log(`Server is running at http://localhost:${port}`);
     });
   })
   // eslint-disable-next-line no-console
   .catch((error) => console.log('Error during Data Source initialization:', error));
+
+export { app };
