@@ -10,9 +10,7 @@ export const AppDataSource = new DataSource({
   port: Number(process.env.DB_PORT),
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
-  database:
-    process.env.NODE_ENV === 'test' ? process.env.DB_TEST_DATABASE : process.env.DB_DATABASE,
+  database: process.env.DB_DATABASE,
   entities: [User],
   synchronize: false,
-  logging: false,
 });

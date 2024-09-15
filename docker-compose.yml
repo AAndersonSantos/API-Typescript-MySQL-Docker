@@ -1,0 +1,42 @@
+services:
+  # Serviço para a aplicação Node.js
+  app:
+    build: .
+    ports:
+      - '8080:8080'
+    environment:
+      DB_HOST: db
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      DB_DATABASE: database_users
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+    volumes:
+      - /app/node_modules
+
+  # Serviço para o banco de dados MySQL
+  db:
+    image: mysql:9.0.1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: database_users
+    ports:
+      - '3306:3306'
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '--silent']
+      interval: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  db_data:
